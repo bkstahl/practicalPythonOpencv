@@ -4,7 +4,6 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True, help="Path to the image")
 ap.add_argument("-ni", "--new-image", required=False, help="Path to the image to be saved")
 args = vars(ap.parse_args())
-print(args)
 
 image = cv2.imread(args["image"])
 print("width: {} pixels".format(image.shape[1]))
