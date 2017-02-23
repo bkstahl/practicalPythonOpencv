@@ -16,7 +16,8 @@ resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
 cv2.imshow("Resized (width)", resized)
 
 # scaled with helper function
-resized = imutils.scale(image, width = 400)
+resized = imutils.scale(image, height = 110)
+print("width: {}".format(resized.shape[1]))
 cv2.imshow("Resized (height)", resized)
 
 cv2.waitKey(0)
