@@ -1,0 +1,27 @@
+#!/usr/local/bin/python3
+import argparse, cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required = True, help="Path to image file")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+chans = cv2.split(image)
+colors = ('b', 'g', 'r')
+
+plt.figure()
+plt.title("'Flattened' color Histogram")
+plt.xlabel("Bins")
+plt.ylabel("# of pixels")
+
+for (chan, color) in zip(chans, colors):
+    hist = cv2.calcHist([chan], [0], None, [256], [0, 256])
+    plt.plot(hist, color = color)
+    plt.xlim([0, 256])
+
+plt.show()
+cv2.waitkey(0)
