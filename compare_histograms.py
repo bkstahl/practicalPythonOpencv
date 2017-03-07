@@ -29,4 +29,26 @@ for imagePath in glob.glob(args["dataset"] + "/*.jpg"):
     hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
     hist = cv2.nomalize(hist).flatten()
     index[filename] = hist
-    
+
+# Method #1
+# openCV methods for comparing histograms
+OPENCV_METHODS = (("Correlation", cv2.cv.CV_COMP_CORREL), ("Chi_Squared", cv2.cv.CV_COMP_CHISQR), ("Intersection", cv2.cv.CV_COMP_INTERSECT), ("Hellinger", cv2.cv.CV_COMP_BHATtACHARYYA))
+
+# loop over the comparison methods
+for (methodname, method) in OPENCV_METHODS:
+    # initialize the results dictionary and reverse variable
+    results = {}
+    reverse = False
+
+    # if usign the correlation or intersection methods
+    # then then sort results in reverse order
+    if methodname in ("Correlation", "Intersection"):
+        reverse  = True
+
+for (k, hist) in index.items():
+    # compute distance between histograms
+    # store results in dictionary
+    d = cv2.compareHist(index["query.jpg"], hist, method)
+    results[k] = d
+# sort results
+results = sorted([(v,k) for (k,v) in results.items()], reverse = reverse)
